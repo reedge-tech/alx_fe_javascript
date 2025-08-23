@@ -1,4 +1,4 @@
-// Initial quotes array
+// Quotes array with objects containing text and category
 let quotes = [
   { text: "The best way to get started is to quit talking and begin doing.", category: "Motivation" },
   { text: "JavaScript is the language of the web.", category: "Programming" },
@@ -12,8 +12,8 @@ const addQuoteBtn = document.getElementById("addQuote");
 const newQuoteText = document.getElementById("newQuoteText");
 const newQuoteCategory = document.getElementById("newQuoteCategory");
 
-// Show a random quote
-function showRandomQuote() {
+// Function to display a random quote
+function displayRandomQuote() {
   if (quotes.length === 0) {
     quoteDisplay.textContent = "No quotes available.";
     return;
@@ -23,7 +23,7 @@ function showRandomQuote() {
   quoteDisplay.textContent = `"${quote.text}" - [${quote.category}]`;
 }
 
-// Add a new quote
+// Function to add a new quote
 function addQuote() {
   const text = newQuoteText.value.trim();
   const category = newQuoteCategory.value.trim();
@@ -32,15 +32,15 @@ function addQuote() {
     quotes.push({ text, category });
     newQuoteText.value = "";
     newQuoteCategory.value = "";
-    alert("New quote added successfully!");
+    displayRandomQuote(); // refresh display
   } else {
     alert("Please fill in both fields.");
   }
 }
 
 // Event listeners
-newQuoteBtn.addEventListener("click", showRandomQuote);
+newQuoteBtn.addEventListener("click", displayRandomQuote);
 addQuoteBtn.addEventListener("click", addQuote);
 
-// Show the first quote on load
-showRandomQuote();
+// Show an initial quote
+displayRandomQuote();
