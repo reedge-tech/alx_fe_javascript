@@ -1,27 +1,21 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Dynamic Quote Generator</title>
+    <meta charset="UTF-8">
+    <title>Dynamic Quote Generator</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        #quote { font-size: 1.2em; margin-bottom: 10px; }
+        button { margin: 5px; padding: 5px 10px; }
+    </style>
 </head>
 <body>
-  <h1>Dynamic Quote Generator</h1>
-
-  <!-- Checker reads from this container -->
-  <div id="quoteDisplay">Click “Show New Quote” to begin.</div>
-
-  <!-- Checker refers to this button text and/or ID -->
-  <button id="newQuote">Show New Quote</button>
-
-  <!-- UI to feed addQuote() -->
-  <div style="margin-top:16px;">
-    <input id="newQuoteText" type="text" placeholder="Enter a new quote" />
-    <input id="newQuoteCategory" type="text" placeholder="Enter quote category" />
-    <!-- Keep inline handler for safety AND also add JS listener -->
-    <button id="addQuoteBtn" onclick="addQuote()">Add Quote</button>
-  </div>
-
-  <script src="script.js"></script>
+    <div id="quote"></div>
+    <button id="newQuoteBtn">Show New Quote</button>
+    <button id="exportJson">Export Quotes</button>
+    <input type="file" id="importFile" accept=".json" />
+    
+    <script src="script.js"></script>
 </body>
 </html>
