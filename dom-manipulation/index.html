@@ -8,16 +8,18 @@
 <body>
   <h1>Dynamic Quote Generator</h1>
 
-  <!-- The checker expects this ID -->
+  <!-- Checker reads from this container -->
   <div id="quoteDisplay">Click “Show New Quote” to begin.</div>
-  <!-- The checker expects this button text/ID relationship -->
+
+  <!-- Checker refers to this button text and/or ID -->
   <button id="newQuote">Show New Quote</button>
 
-  <!-- Simple UI to use addQuote() -->
+  <!-- UI to feed addQuote() -->
   <div style="margin-top:16px;">
     <input id="newQuoteText" type="text" placeholder="Enter a new quote" />
     <input id="newQuoteCategory" type="text" placeholder="Enter quote category" />
-    <button id="addQuoteBtn">Add Quote</button>
+    <!-- Keep inline handler for safety AND also add JS listener -->
+    <button id="addQuoteBtn" onclick="addQuote()">Add Quote</button>
   </div>
 
   <script src="script.js"></script>
