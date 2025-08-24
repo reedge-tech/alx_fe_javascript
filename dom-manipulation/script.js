@@ -3,40 +3,41 @@ let quotes = [
   { text: "Second quote", category: "Life" }
 ];
 
-// Load quotes from local storage
-if(localStorage.getItem("quotes")) {
-  quotes = JSON.parse(localStorage.getItem("quotes"));
+// Load quotes from localStorage
+function loadQuotes() {
+  const storedQuotes = localStorage.getItem("quotes");
+  if (storedQuotes) {
+    quotes = JSON.parse(storedQuotes);
+  }
+  const lastQuote = sessionStorage.getItem("lastQuote");
+  if (lastQuote) {
+    document.getElementById("quoteDisplay").innerHTML = lastQuote;
+  }
 }
 
-// Display last viewed quote from session storage
-let lastQuote = sessionStorage.getItem("lastQuote") || "";
-const quoteDisplay = document.getElementById("quoteDisplay");
-quoteDisplay.innerHTML = lastQuote;
+loadQuotes();
 
+// Display a random quote
 function showRandomQuote() {
   const randomIndex = Math.floor(Math.random() * quotes.length);
   const randomQuote = quotes[randomIndex];
-  quoteDisplay.innerHTML = randomQuote.text + " [" + randomQuote.category + "]";
-  sessionStorage.setItem("lastQuote", quoteDisplay.innerHTML);
+  document.getElementById("quoteDisplay").innerHTML =
+    randomQuote.text + " [" + randomQuote.category + "]";
+  sessionStorage.setItem("lastQuote", document.getElementById("quoteDisplay").innerHTML);
 }
 
 // Add a new quote
 function addQuote() {
   const text = document.getElementById("newQuoteText").value;
   const category = document.getElementById("newQuoteCategory").value;
-  if(text && category) {
+  if (text && category) {
     quotes.push({ text, category });
-    saveQuotes();
+    localStorage.setItem("quotes", JSON.stringify(quotes));
     showRandomQuote();
   }
 }
 
-// Save quotes to local storage
-function saveQuotes() {
-  localStorage.setItem("quotes", JSON.stringify(quotes));
-}
-
-// Export quotes as JSON file
+// Export quotes to JSON file
 function exportToJsonFile() {
   const blob = new Blob([JSON.stringify(quotes)], { type: "application/json" });
   const url = URL.createObjectURL(blob);
@@ -50,10 +51,10 @@ function exportToJsonFile() {
 // Import quotes from JSON file
 function importFromJsonFile(event) {
   const fileReader = new FileReader();
-  fileReader.onload = function(event) {
-    const importedQuotes = JSON.parse(event.target.result);
+  fileReader.onload = function(e) {
+    const importedQuotes = JSON.parse(e.target.result);
     quotes.push(...importedQuotes);
-    saveQuotes();
+    localStorage.setItem("quotes", JSON.stringify(quotes));
     alert("Quotes imported successfully!");
   };
   fileReader.readAsText(event.target.files[0]);
@@ -61,5 +62,6 @@ function importFromJsonFile(event) {
 
 // Event listeners
 document.getElementById("newQuote").addEventListener("click", showRandomQuote);
+document.getElementById("addQuoteBtn").addEventListener("click", addQuote);
 document.getElementById("exportQuotesBtn").addEventListener("click", exportToJsonFile);
-
+document.getElementById("importFile").addEventListener("change", importFromJsonFile);
